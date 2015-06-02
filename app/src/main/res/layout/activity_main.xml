@@ -5,7 +5,41 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     android:paddingBottom="@dimen/activity_vertical_margin" tools:context=".MainActivity">
 
-    <TextView android:text="@string/hello_world" android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+    <TextView android:text="x axis"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/xlabel"/>
 
+    <TextView
+        android:text="default text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/xText"
+        android:layout_below="@id/xlabel"/>
+
+    <TextView android:text="y axis"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/ylabel"
+        android:layout_below="@id/xText"/>
+
+    <TextView
+        android:text="default text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/yText"
+        android:layout_below="@id/ylabel"/>
+
+    <TextView android:text="z axis"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/zlabel"
+        android:layout_below="@id/yText"/>
+
+    <TextView
+        android:text="default text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/zText"
+        android:layout_below="@id/zlabel"/>
 </RelativeLayout>
