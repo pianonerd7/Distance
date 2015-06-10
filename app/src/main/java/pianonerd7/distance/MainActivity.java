@@ -3,6 +3,7 @@ package pianonerd7.distance;
 import android.content.Context;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.format.Time;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.hardware.SensorManager;
@@ -16,6 +17,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
 
     private SensorManager mySensorManager;
     private Sensor mySensor;
+    private double distance;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,36 +26,45 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
 
         mySensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
         mySensor = mySensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
-        mySensorManager.registerListener(this, mySensor, mySensorManager.SENSOR_DELAY_NORMAL);
+        mySensorManager.registerListener(this, mySensor, mySensorManager.SENSOR_DELAY_FASTEST);
     }
 
     @Override
     public void onSensorChanged(SensorEvent sensorEvent) {
 
-        //Sensor sensor = sensorEvent.sensor;
+        long t0 = System.currentTimeMillis();
 
-        //if (mySensor.getType() == Sensor.TYPE_ACCELEROMETER) {
-            float x = sensorEvent.values[0];
-            float y = sensorEvent.values[1];
-            float z = sensorEvent.values[2];
+        float x = sensorEvent.values[0];
+        float y = sensorEvent.values[1];
+        float z = sensorEvent.values[2];
 
         TextView textx = (TextView) findViewById(R.id.xText);
         TextView texty = (TextView) findViewById(R.id.yText);
         TextView textz = (TextView) findViewById(R.id.zText);
 
-        textx.setText(x+"");
-        texty.setText(y+"");
-        textz.setText(z+"");
+        textx.setText(x + "");
+        texty.setText(y + "");
+        textz.setText(z + "");
 
-        //}
+        updateDistance(t0, System.currentTimeMillis(), x);
+    }
 
+    public void updateDistance(long t0, long t, float x) {
+
+        long dt = t - t0;
+
+        long velocity = (long) x * dt;
+        long displacement = velocity * dt;
+
+        distance = distance + displacement;
+        TextView result = (TextView) findViewById(R.id.Result);
+        result.setText(distance + "");
     }
 
     @Override
     public void onAccuracyChanged(Sensor sensor, int accuracy) {
 
     }
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
